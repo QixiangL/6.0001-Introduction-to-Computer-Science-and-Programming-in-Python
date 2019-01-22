@@ -1,0 +1,105 @@
+# Lecture 8: Object Oriented Programming
+   8.1 Object oriented programming (OOP)
+      8.1.1 Everything in Python is an object!
+	* can create new objects of some type
+	* can manipulate objects
+	* can destroy objects
+      8.1.2 What are objects?
+	* objects are a data abstraction that captures:
+	      - internal representation #how data be represented
+	      - interface for interacting with object #what are the ways you can interacts with it
+	   #example: [1, 2, 3, 4] type list
+	      - how are list represented internally? ---> linked list of cells
+	      - how to manipulate lists? ---> operations on lists
+		# L[i], L[i:j], +;
+		# len(), min(), max(), del(L[i]);
+		# L.append(), L.extend(), L.count(), L.index(), L.insert(), L.pop(), L.remove(), L.reverse(), L.sort();
+      8.1.3 Advantages of OOP (you don't need to know the internal structure, you only uses these objects)
+	* bundle data into packages
+	* divide-and-conquer development
+	* classes make it easy to reuse code
+   8.2 CLASS
+      #Creating and using your own types with classes
+      8.2.1 difference between creating and using a class
+	* creating: 
+	   - define the class name
+	   - define class attributes (internal representation)
+	* using:
+	   - create new instances of object
+	   - do operations on instances (manipulate the object)
+      8.2.2 define your own types
+	#use class keyword to define a new type
+	#class Coordinate(object):
+		#define attributes here
+	* The word <object> means that <Coordinate> is a Python object and inherits all its attributes
+      8.2.3 Attributes
+	* Class = * data attributes + * procedural attributes
+	   <1> implementing the class + <2> using the class
+	* data attributes - data as other objects that make up the class
+	   <1> implementing the class
+	   #use _init_ to initialize some data attributes
+		class Coordinate(object):
+			def _init_(self, x, y):       #self indicates this special class, x and y initializes a Coordinate object
+				self.x = x      #2 data attributes for every Coordinate object
+				self.y = y
+	   <2> using the class
+	   #actually creating an instance of a class
+		c = Coordinate (3, 4)                    #create a new object of type Coordinate (instance)
+		origin = Coordinate (0, 0)
+		print(c. x)                                     #use the dot to access an attribute of instance C
+		print(origin. x)
+	      - data attributes of an instance are called instance variables ---> c. x
+	      - "." operator is used to access any attribute (data or procedural)
+	* procedural attributes - methods as functions that only work with this class
+	   <1> implementing the class
+	   #other than self and dot notation, method behave just like functions
+		class Coordinate(object):
+			def _init_(self, x, y):       
+				self.x = x      
+				self.y = y
+			def distance (self, other):
+				x_diff_sq = (self.x - other.x) ** 2      #dot notation to access data
+				y_diff_sq = (self.y - other.y) ** 2
+				return (x_diff_sq + y_diff_sq) ** 0.5
+	   <2> using the class
+	   #conventional way
+		c = Coordinate (3, 4)
+		zero = Coordinate (0, 0)
+		print(c.distance(zero))
+	      - object to call method on ---> c
+	      - name of method ---> distance
+	      - 1 parameter, instance variable ---> zero (self is implied to be c)
+	   #equivalent to
+		c = Coordinate (3, 4)
+		zero = Coordinate (0, 0)
+		print(Coordinate.distance(c, zero))
+	      - name of class ---> Coordinate
+	      - name of method ---> distance
+	      - 2 parameters, object to call the method ---> c representing self
+      8.2.3 print representation of an object
+	* define a _str_method for a class
+	   #def_str_(self):   #_str_ replace print statement in class
+		return "<" + str(self.x) + "," + str(self.y) + ">"     #must return a string
+	* use isinstance() to check if an object is a Coordinate
+	   #print(isinstance(c, Coordinate))
+	     >>> True
+      8.2.4 special operations
+	#define them with double underscores before/after
+	* how to call it?
+	  _add_(self, other) ---> ._add_ or +
+	  _sub_(self, other) --->._sub_ or -
+	  _eq_(self, other) ---> ._eq_ or ==
+	  _lt_(self, other) ---> ._lt_ or <
+		...
+	  _len_(self) ---> ._len_ or len()
+	  _float_(self) ---> ._float_ or float()
+	  _str_(self) ---> print()
+		...
+	* own operation ---> def ownfunction(self):
+			---> .ownfunction()
+   8.3 THE POWER OF OOP
+	* bundle together objects with same <type>
+	* use abstraction or function like def statement to make a distinction between <implement> and <use>
+	* build layers of object abstractions that inherit behaviors from other classes of objects
+		# Lec9
+	* create own classes of objects

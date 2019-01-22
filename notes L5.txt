@@ -1,0 +1,86 @@
+# Lecture 5: Tuples, Lists, Aliasing, Mutability, and Cloning
+   5.1 introduce new compound data types - <tuple> and <list>
+      5.1.1 Tuples
+	* an order sequence of elements, can mix element types, represented with parentheses
+	* example - 
+	   # t = (2, "CMU", 5)
+	      t[0] -> 2 --- indexing
+	      t[1:2] -> ("CMU", ) --- slicing
+	* cannot change element values, immutable
+	   # how we swap variable values
+	      - temperary value - temp = x; x = y; y = temp;
+	      - using tuple - (x, y) = (y, x)
+	      - used to return more than one value from a function -
+		def swap(x, y):
+			s1 = x + y
+			s2 = x - y
+			return (s1, s2)
+		(new_x, new_y) = swap(x, y)  # call the function with actual value (x, y)
+	* MANIPULATING TUPLES!!! - iteration over tuples - return (a, b) to return more than one object
+	   # aTuple, tuple of tuples (int, string)
+		Extracts all integers from aTuple and sets them as elements in a new tuple.
+	   - aTuple:((<int1>, <string1>), ... , (<intn>, <stringn>))
+	   - nums(int1, ... , intn); words(string1, ... , stringn)
+	      - nums = nums + (t[0], )
+	      - words = words + (t[1], )
+      5.1.2 Lists - L = [1, 2, 3] <- denoted by square brackets
+	* definition 
+	   - ordered sequence of information, accessible by index
+	   - usually homogeneous elements (integers maybe)
+	   - MUTABLE!!!
+	     # L = [2, 'a', 4]
+	        L[2] = 5 ---> L =[2, 'a', 5]
+	* Iterating over a list
+	   # for i in L: <---> for char in word: # like strings, can iterate over list elements directly
+      5.1.3 operations on list - [ADD, REMOVE, CONVERT, OTHERS, ... ]
+	   # what is the dot? object_name.do_something() 
+	* ADD - L.append(element) - add new element to the end of list - [MUTATE]
+	           - L1 + L2 - combine lists together use concatenation - [UN-MUTATE]
+	           - L.extend([a, b]) - L1.extend(L2) = L1 + L2 - add list element a, b to the end of list - [MUTATE]
+	* REMOVE - L.remove(element) - remove a specific element once, if element not in list, gives an error - [MUTATE]
+	                 - del(L[index]) - delete element at a specific index - [MUTATE]
+	                 - L.pop(L[index]) - remove element at [indexing +1] and return it - [MUTATE]
+	* CONVERT - list(s) - convert string to list - s = "apple" ---> list(s) =["a", "p", "p", "l", "e"]
+	                   - ' '.join(L) - convert list to string - L = ['a', 'b', 'c'] --->' '.join(L) = "abc"
+		      '_'.join(L) - ['a', 'b', 'c'] ---> "a_b_c"
+		   - s.split('<') - split a string on a character, if none splits space ' ' - s = "I am robot." ---> s.split() = ["I", "am", "robot."]
+	* OTHER - sorted(L) - new list that sorted - [UN-MUTATE]
+	              - L.sort() - new sorted list - [MUTATE]
+	              - L.reverse() - new reversed sorted list - [MUTATE]
+   5.2 idea of aliasing
+	* list1 = ['a', 'b', 'c']
+	   list2 = list1                 # alias for list1, which is mutatable as list1 changes [MUTATE - side effect]
+	   list1.append('d')
+	   print(list1) ---> ['a', 'b', 'c', 'd']
+	   print(list2) ---> ['a', 'b', 'c', 'd']
+   5.3 idea of cloning
+      	* list1 = ['a', 'b', 'c']
+	   list2 = list1[:]              # clone for list1, but is un-mutatable as list1 changes [UN-MUTATE - no side effect]
+	   list1.append('d')
+	   print(list1) ---> ['a', 'b', 'c', 'd']
+	   print(list2) ---> ['a', 'b', 'c']
+   5.4 idea of mutability
+      5.4.1 .sort and sorted()
+	* calling .sort() mutates the list, returns nothing!!!
+	   # list.sort() is an operation, not an object
+	* calling sorted() does NOT mutates the list!!!
+	   # sorted(list) can be assigned to a variable, returns an <sorted list> object
+      5.4.2  mutation and iteration
+	* Python uses an internal counter to keep track of index it is in the loop
+	* mutating changes the list length but Python doesn't update the counter
+	* loop never sees element after the <dup element>
+	* example: # WRONG !!!
+	   # L1 = [1, 2, 3, 4]
+	   # L2 = [1, 2, 5, 6]
+	   	def remove_dups(L1, L2):
+			for e in L1:
+				if e in L2:
+					L1.remove(e)
+	   Result: L1 = [2, 3, 4]
+	* how to deal with it ? MAKE A CLONE!
+		def remove_dups(L1, L2):
+			L1_clone = L1[:] # MAKE A CLONE FIRST!!!! Then the Python will do the right counter in L1.
+			for e in L1:
+				if e in L2:
+					L1.remove(e)
+	   Result: L1 = [3, 4]

@@ -1,0 +1,107 @@
+# Lecture 7: Testing, Debugging, Exceptions, and Assertions
+   7.1 Basic concept
+      7.1.1 an analogy for debugging
+	debugging is just like clean the bugs from the soup
+	* check soup for bugs: testing
+	* keep lid closed: defensive programming
+	* clean kitchen: eliminate source of bugs
+      7.1.2 strategy
+	* defensive programming
+	      - write specifications for functions #like this
+	      - modularize programs
+	      - check conditions on inputs/outputs (assertions)
+	* testing/validation
+	      - compare input/output pairs to specification
+	* debugging
+	      - study events leading up to an error
+	* set yourself up for easy testinga and debugging
+	      - design code easy to ease
+	      - break program up into modules that can be tested and debugged individually
+	      - document constraints on modules and document assumptions behind code design
+	      - ensure code runs
+	      - set of expected results 
+      7.1.3 classes of tests
+	* unit testing - test each function separately
+	* regression(back again) testing - catch reintroduced errors
+	* integration testing - overall program testing
+      7.1.4 testing approaches
+	* intuition about natural partitions
+ 	   # return True if y is less than x, else False (basic natural returns, not input/output involved)
+	* black box testing
+	   # designed without looking at the code - paths through specification
+	* glass box testing
+	   # use code directly to guidie desgin of test cases (path-complete)
+   7.2 Debugging
+      7.2.1 print statement
+	* good way to test hypothesis
+	   - function, parameters, function results
+	   - use bisection method: print halfway in code
+      7.2.2 Error messages - easy
+	* IndexError - trying to access beyond the limits of a list - test = [1, 2, 3], then test[4]
+	* TypeError - trying to convert an inappropriate type - int(test)
+	* NameError - referencing a non-existent variable - a
+	* TypeError - mixing data types without appropriate coercion - '3' / 4
+	* SyntaxError - forgetting to close parenthesis, quotation, etc. - a = len([1, 2, 3] , then print(a)
+      7.2.3 logic Errors - hard
+   7.3 Exceptions
+      7.3.1 unexpected conditions
+	* IndexError, TypeError, NameError, TypeError
+	* SyntaxError - Python can't parse program
+	   NameError - Local or global name not found
+	   AttributeError - attribute reference fails
+	   TypeError - operand doesn't have correct type
+	   ValueError - operand type okay, but value is illegal
+	   I0Error - I0 system reports malfunction
+      7.3.2 Python code can provide handlers for exceptions
+		# try: <expression>
+	   	   except: <bug alert>
+	* separate except clauses for a particular type of exception
+	   # try: <expression>
+	      except ValueError: <ValueError bug alert>
+	      except ZeroDivisionError: <0 Divion bug alert>
+	      ...
+	      except: <general bug alert>
+      7.3.3 other exceptions
+	* else: try body is total fine! NO BUG AT ALL!!!
+	* finally: the last thing that is must done, e.g. close a file
+      7.3.4 control flow - raise
+	* raise an exception with syntax
+	   # raise ValueError("Some thing is wrong!")
+	         |            |                          |
+	      raise<exceptionName>(<arguments>)
+      7.3.5 #example_noGrade
+	* def get_stats(class_list):
+		new_stats = []
+		for elt in class_list:
+			new_stats.append([elt[0], elt[1], avg(elt[1])])
+		return new_stats
+	  def avg(grades):
+		return sum(grades) / len(grades)
+	* OPTION 1: flag the error by print statement
+	  def avg(grades):
+		try:
+			return sum(grades) / len(grades)
+		except ZeroDivisionError:
+			print('Warning: no grades data') # flagged the error with print
+	* OPTION 2: change the policy
+	   def avg(grades):
+		try:
+			return sum(grades) / len(grades)
+		except ZeroDivisionError:
+			print('Warning: no grades data') # flagged the error with print
+			return 0.0  # now avg returns 0! Not None.
+   7.4  Assertions
+      7.4.1 assertion as defensive programming
+	* assert whether state of computation are as expected - good defensive programming
+      7.4.2 assert statement
+	# assert <expected programming assumption>(<arguments>)
+ 	#example
+	  def avg(grades):
+		assert len(grades) != 0, 'no grades data'         # function ends immediately if assertion not met
+		return sum(grades) / len(grades)
+      7.4.3 when we use it?
+	* result: ensure that excution halts whenever an expected condition is not met
+	* utility in code:
+	   - check inputs/outputs data
+	   - use as a supplement to testing
+	

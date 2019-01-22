@@ -1,0 +1,45 @@
+# Lecture 2: Branching and iteration
+   2.1 string object type
+      2.1.1 strings - letters, special characters, spaces, digits 
+	* hi = "hello there"; name = "qixiang"; - enclose in quotation marks or single quotes
+	* greeting = hi + " " + name - concatenate strings
+	* silly = hi + " " + name * 3 - operations on string
+      2.1.2 INPUT/OUTPUT - print("") & input("")
+	* 2 way of printing sentences - print("My name is", x, "."); print("My name is " + x + " .")
+      2.1.3 comparision operators on int, float, string (ascii table) 
+	* i == j - equality test
+	* i != j - inequality test
+      2.1.4 logic operators on bools
+	* not a - True if a is False, False if a is True
+	* a and b - True if both are True
+	* a or b - True if either or both are True 
+   2.2 branching and conditionals (CONTROL FLOW)
+      2.2.1 if<condition> + <expression>
+      2.2.2 elif<condition> + <expression>
+      2.2.3 else: +<expression>
+	* <condition> has a value True or False
+	* evaluate expressions in the block if <condition> is True
+   2.3 indentation - how you denote (indiate) block of code
+	* vs == and != 
+   2.4 iteration and loops
+      2.4.1 while loops
+	* while <condition>: <expression> 
+	   # <condition> evaluates to a Boolean; 
+	      if <condition> is True do <expression>;
+	      check <condition> again; 
+	      repeat until <condition> is False
+	* iteration through nums in a sequence - i = 0; while num < i: <expression>
+      2.4.2 for loops
+	* for <variable> in range(start, stop, step)
+	   # loop until value is stop -1
+      2.4.3 break STATEMENT
+	* exits only innermost loop!
+      2.4.4 comparation between for and while LOOPS
+	* for LOOPS - 
+	   # known number of iterations;
+	      with an inner counter; 
+	      rewritiable through while LOOPS
+	* while LOOPS - 
+	   # unbounded number of iterations; 
+	      can use a counter but must initialize; 
+	      MAYNOT rewritiable through for LOOPS

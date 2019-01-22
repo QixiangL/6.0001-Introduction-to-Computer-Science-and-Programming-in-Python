@@ -1,0 +1,65 @@
+# Lecture 10: Understanding Program Efficiency, Part 1
+   10.0 Why need to understand efficiency
+	* time efficiency: how long does it take?
+	* space efficiency: how much space it needs to store? (e.g., memoization for Fibonacci)
+	* solution ---> tradeoff between them, mostly time efficienncy is prime.
+   10.1 Evaluate efficiency of programs
+      10.1.1 measure with a timer
+	* use time module
+	   #import time
+		<start clock> t0 = time.clock()
+		call function c = f(1000)
+		<stop clock> t1 = time.clock() - t0
+	* BAD IDEA: fail to distinct implementations & computers, and small inputs
+      10.1.2 count the operations
+	* BAD IDEA: fail to distinct implementations and no clear mind for which operations to count
+      10.1.3 abstract notion of order of growth (big O notation)
+	* Capable of measure and evaluate:
+	   - algorithm, scalability, in terms of input size
+	* Need to find relation between <inputs change> and <program runs>
+	   - #find i in List
+	      <Best case>:  minimum running time; constant for function; first element in any list
+	      <average case>: average running time; partical measure
+	      <worst case>: maximum running time; [order of growth] in length of list for function; all elements in any list
+	* Goal
+	   - tight upper bound on growth
+	   - as a function of size of input
+	   - in worst case
+   10.2 BIG OH NOTATION - O()
+      10.2.1 definition
+	* big Oh notation measures an upper bound on the asymptotic growth, often called order of growth
+	* Big Oh or O() is used to describe worst case
+      10.2.2 examples
+	-------------------------------------------
+	Big OH notation ---> number of steps
+	-------------------------------------------
+	O(n^2) ---> n^2+2n+2
+	O(n^2) ---> n^2 +10000n+3^1000
+	O(n) ---> log(n) + n + 4
+	O(nlog(n)) ---> 0.0001*n*log(n) + 300n
+	O(3^n) ---> 2n^30+3^n
+	-------------------------------------------
+	* foucs on dominant terms
+      10.2.3 types of orders of growth
+	* 6 complexity classes
+	   - O(1): constant
+	   - O(logn): logarithmic
+	   - O(n): linear
+	   - O(nlogn): log-linear
+	   - O(n^c): polynomial	#when c = 2, O(n^2): quadratic
+	   - O(c^n): exponential
+	   #
+	* analyzing programs and their complexity
+	   - Law of Addition: used with sequential statement;
+		#example:
+			for i in range(n):
+				print("a")
+			for j in range (n*n):
+				print("b")
+		#overall complecity O(f(n)+g(n)) = O(n+n^2) = O(n^2) ---> quadratic
+	   - Law of Multiplication: used with nested statement/loops;
+		#example:
+			for i in range(n):
+				for j in range(n):
+					print("a")
+		#overall complexity O(f(n)*g(n)) = O(n)*O(n) = O(n^2) ---> quadratic

@@ -1,0 +1,130 @@
+# Lecture 9: Python Classes and Inheritance
+   9.0 Last time review
+      9.0.1 write code from 2 different perspectives
+	* implementing a new object type with class
+	   - define the class
+	   - define data attributes ---> WHAT is the object #def _init_(self, other) 
+	   - define methods ---> HOW to use the object #def method(self, other)
+	* using the new object type in code
+	   - create instances of object type ---> #c = Class_function(3, 4)
+	   - do operations with them (instance variables) ---> #print(c.method())
+      9.0.2 characteristics
+	* class definition of an object type:
+	   - class defines data and methods common across all instances
+	* instance of class:
+	   - instance has the structure of the class
+   9.1 More on classes
+      9.1.1 getter and setter methods
+	* getters and setters are used to access data attributes
+	   # class Animal(object):
+		def _init_(slef, age):
+			self.age = age
+			self.name = None
+		-------------------------------
+	                def get_age(self):                 # getter
+			return self.age     
+		def get_name(self):              
+			return self.name  
+		-------------------------------
+	                def set_age(self, newAge):    # setter, if get and set is the same one then set_ is tidious!
+			self.age = newAge    
+		def set_name(self, newName):              
+			self.name = newName 
+		-------------------------------
+		def _str_(self):
+			return "animal: " + str(self.name) + ": " + str(self.age)
+	* how to call it?
+		#a = Animal(3)
+		  print(a)                         >>> animal: None: 3
+		  print(a.get_age())          >>> 3
+		  a.set_name("MioMio")
+		  print(a)                         >>> animal: MioMio: 3
+      9.1.2 information hiding
+	* Python not great at information hiding
+	   #example: Python allows you to access/write/create data attributes outside the class definition.
+	      - how to avoid it?
+	      - use a.get_age() NOT a.age ---> ALWAYS USE GETTER AND SETTER!!!
+      9.1.3 default arguments
+	* default agruments for formal parameters are used if no actual argument is given
+	   #def set_name(self, newName=""):     # newName="" is a default argument to avoid empty variable error
+		self.name = newName
+	     a = Animal(3)
+	     a.set_name()
+	     print(a.get_name())          >>> None
+   9.2 Inheritance - ¼Ì³ÐÒÅ´«
+      9.2.1 hierarchies
+	* parent class - <superclass>
+	* child class - <subclass>
+	   - inherits all data and behaviors of parent class
+	   - add more info and behavior
+	   - override behavior
+      9.2.2 inheritance: superclass ---> Animal
+      9.2.3 inheritance: subclass ---> Cat
+	#class Cat(Animal):                           #inherits all attributes of <Animal>-superclass
+		def speck(self)                  #add new functionality via speck method
+			print("meow")   
+		def _str_(self):	        #override _str_
+			return "cat: " + str(self.name) + ": " + str(self.age)
+	* inherits + add + override
+      9.2.4 #examples
+	#[1] subclass ---> Person
+		class Person(Animal):                                         #parent class as Animal
+			def _init_(self, name, age):                  #child class data attribute
+				Animial._init_(self, age)       #call Animal constructor
+				self.set_name(name)          #call Animal's method
+				self.friends = []                  #add a new data attribute
+			-------------------------------------
+				new methods
+			-------------------------------------
+			def _str_(self):                                    #override _str_
+				return "person: " + str(self.name) + ": " + str(self.age)
+	#[2] sub-subclass ---> Student
+		import random                                                  #bring in methods from random class
+		class Student(Person):                                        #inherit from Person and Animal attributes
+			def _init_(self, name, age, major=""):                  
+				Person._init_(self, name, age)             
+				self.major = major             #add new data attribute
+			-------------------------------------
+				new methods
+			-------------------------------------
+			def what_are_you_doing(self):
+				r = random.random()        #random class with random() method
+							to give back float in [0, 1)
+				if r < 0.25:
+					print("i have hw...")
+				elif 0.25 <= r < 0.5:
+					print("i need sleep...")
+				elif 0.5 <= r < 0.75:
+					print("i am hungry...")
+				else:
+					print("CHICKEN DINNER baby!")
+			def _str_(self):                                    #override _str_
+				return "Student: " + str(self.name) + ": " + str(self.age) + ": " + str(self.major)
+	#[3] subclass ---> Rabbit & Class Variables ---> tag
+	* class variables and their values are shared between all instances of a class
+		#tag used to give unique id to each new rabbit instance
+		class Rabbit(Animal):                                         
+			tag = 1                                              #class variable
+			def _init_(self, age, parent1="", parent2=""):                  
+				Animial._init_(self, age)       
+				self.parent1 = parent1
+				self.parent2 = parent2
+				self.rid = Rabbit.tag           #<instance variable> access <class variable>
+				Rabbit.tag += 1                 #incrementing class variable
+			---------------------------------------
+			def get_rid(self):
+				return str(self.rid) .zfill(3)    #zfill(3) means 001 replaces 1
+			def get_parent1(self):
+				return self.parent1
+			def get_parent2(self):
+				return self.parent2			
+			---------------------------------------
+      9.2.5 OOP advantage
+	* create your own collections of data
+	* organize information
+	* division of work
+	* access information in a consistent manner
+	* add layers of complexity
+	* like functions, classes are a mechanism for decomposition and abstraction in programming
+          
+			

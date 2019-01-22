@@ -1,0 +1,59 @@
+# Lecture 3: String Manipulation, Guess and Check, Approximations, Bisection
+   # last 3 are ALGORITHMS for guessing
+   3.1 string manipulation
+      3.1.1 definition and basic operation
+	* sequence of case sensitive characters
+	* compare operation - ==, >, < etc.
+	* length operation - len()
+      3.1.2 indexing
+	* square brackets to index string
+	   # s = "abc" index: 0 1 2 or -3 -2 -1
+	      s[0] == s[-3] = "a"; s[1] == s[-2] = "b"; s[2] == s[-1] = "c"
+      3.1.3 slicing
+	* slice strings using [start: stop: step]
+	   # s = "abcdefgh"
+	      s[3: 6: 2] = "df" 
+	* strings are "IMMUTABLE" - cannot be modified
+	   # change s = "hello" to s = "yello"
+	      s[0] = 'y' - ERROR!
+	      s = 'y' + s[1: len(s)]
+      3.1.4 LOOPS RECAP (string loops)
+	* loop variable 
+	   - numbers - for var in range(4, 6): <expression>
+	   - indexing in string - for index in range(len(s)): <expression>
+	   - CHAR - for char in s: <expression>
+	      # more pythonic for char in word
+	* example - Robot cheerleader & Common letter
+   3.2 guess and check algorithms (exhuasted enumeration)
+	* for guess in range(cube + 1) - test from 0 to cube
+		if guess ** 3 == cube:
+			print("Cube root of", cube, "is", guess)
+	   # guess a value for solution
+	   # check if the solution is correct
+	   # keep guessing and checking ...unitil find solution or guessed all values
+   3.3 approximate solutions (find an approximate solution)
+	* Initial value
+	   - epsilon (how close to the target) and increment (how large each step is)
+	   - target and guess, and num_guesses
+	* while abs(guess ** 3 - cube) >= epsilon and guess <=cube:
+		guess += increment
+		num_guesses += 1
+	   # good enough approximation
+	   # start with a guess and increment by small value
+	   # keep guessing if abs(guess ** 3 - cube) >= epsilon, for some small epsilon
+	   # decreasing increment size - slower program
+	      increasing epsilon - less accurate answer
+   3.4 bisection search method
+	* half interval each iteration and new guess is halfway in between
+	* guess CONVERGES on the order of log2N steps
+	* Initial low and high value - low = 0, high = guess, guess = (high + low) / 2.0
+	  While abs(guess ** 3 - cube) >= epsilon:
+		if guess ** 3 < cube:
+			low = guess  #re-define the low boundary
+		else:
+			high = guess  #re-define the high boundary
+		guess = (high + low) / 2.0
+		num_guesses +=1
+ 
+		
+	 	

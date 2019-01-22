@@ -1,0 +1,70 @@
+# Lecture 6: Recursion and Dictionaries
+   6.1 recursion - call itself
+      6.1.1 what is recursion?
+	* Algorithmically: divide-and-conquer or decrease-and-conquer
+		reduce a problem to simpler versions of the same problem
+	* Semantically: a program where a function calls itself
+      6.1.2 iterative algorithm and recursion algorithm
+	* iteration - looping constructs - while and for loops
+	   # 2 important state variables 
+	      - iteration number (i) - for i in range(num); i += 1
+	      - value of computation (result) - result += a
+	* recursion - <base case> + <recursive step>
+		recursion may be simpler, more intuitive
+	   # example - multiplication a * b
+		def mult(a, b):
+			if b == 1:   # base case - simple case that can be solved directly, when b=1, a*b=a
+				return a
+			else:           # recursive step - reduce problem to a simpler version, where a*b = a+a*(b-1)
+				return a + mult(a, b-1)
+	   # example - factorial n! = n*(n-1)*(n-2)*...*1
+		def fact(n):
+			if n ==1:
+				return 1
+			else:
+				return n*fact(n-1)
+	   # example - TOWERS OF HANOI & Fibonacci numbers
+	      - base cases: Females(0) = 1 or Females(1) = 1
+	      - recursive case: Females(n) = Females(n-1) + Females(n-2)
+	   # example - Palindrome char check - <abcdefgfedcba>
+	      - def pal(s)
+	      - base case: if len(s) <= 1: return True
+	      - recursive case: return s[0] == s[-1] and pal(s[1:-1])
+   6.2 Dictionary - <Key i>-<Value i>
+      6.2.1 definition of dictionary type
+	* a list = <index>0, 1, 2, 3, ... ------ <element 0, 1, 2, 3, ...> index and element
+	* a dictionary = <key 0, 1, 2, 3, ...> ------ <value 0, 1, 2, 3, ...> key(custom index by label) and value
+	   # myDict = {}   # empty dictionary
+	      grades = {'Ana':'A', 'Bna':'B', 'Cna':'A+'}   # key : val
+      6.2.2 operation of dictionary
+	* [add] an entry - grades['Qixiang'] = 'A+'
+	* [test] if key in dictionary - 'Ana' in grades ---> returns True
+	                                      - 'John' in grades ---> returns False
+	* [delete] entry - del(grades['Ana'])
+	* [get] a tuple of all keys or values - grades.keys() ---> returns ['Ana', 'Qixiang', 'Cna', 'Bna']
+	                                                     - grades.values() ---> returns ['A', 'A+', 'A+', 'B']
+		# NO GUARANTEED ORDER!!!
+      6.2.3 KEYS and VALUES
+	* values - any type (both immutable and mutable)
+	* keys - must be IMMUTABLE type (int, float, string, tuple, bool) or <hashable>
+      6.2.4 example
+	* creating a dictionary
+		def lyrics_to_frequencies(lyrics):
+			myDict = {}
+			for word in lyrics:
+				if word in myDict:
+					myDict[word] += 1
+				else:
+					myDict[word] = 1
+			return mtDict
+	* using dictionary and minTimes using dictionary ----- slide [CODE]
+	* Efficiencient Fibonacci - Method called "memoization" (memory the used value to minize the recursive calls)
+		def fib_efficient(num, dict):                 # memoization!!!
+			if num in dict:
+				return dict[num]
+			else:
+				ans = fib_effcient(num-1, dict) + fib_efficient(num-2, d)
+				d[n] = ans
+				return ans
+		dict = {0:1, 1:1, 2:2}   # initialize dictionary with base cases
+		print(fib_efficient(6, dict))

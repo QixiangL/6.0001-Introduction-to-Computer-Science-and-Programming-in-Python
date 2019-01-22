@@ -1,0 +1,36 @@
+# Lecture 1: What is Computation?
+   1.1 Topics of the courses
+	* iteration and recursion
+ 	* organize and modularize
+	* ALGORITHMS!
+	* complexity of algorithms
+   1.2 Construction of languages
+	* primitive constructs - numbers, strings, simple operators
+	* syntax - 3.2 * 5
+	* static semantics - syntactically valid strings have meaning; e.g. 3.2 * "hi" #static semantic error
+	* semantics - meaning associated with a syntactically correct string of symbols with no static semantic errors
+        # syntactic + static semantic + semantic = all those errors come from
+   1.3 Objects (or type)
+      1.3.1 scalar object (can not be subdivided)
+	* int - represents integers, ex. 5
+	* float - represent real numbers, ex. 3.27
+	* bool - represent Boolean values True and False
+	* Nonetype - special and has one value, None
+        # type() - see the type of an object
+        # int() or float() - type conversions (cast)
+      1.3.2 non-scalar (internal structure)
+	* list - [1, 2, 3]
+   1.4 Expression <object><operator><object>
+        # an expression has a value, which has a type
+	* i + j - the sum
+	* i - j - the difference
+	* i * j - the product
+	* i / j - the division #result is float
+	** i % j - the remainder when i is divided by j
+	** i ** j - i to the power of j
+        # use parentheses () to tell Python to do these operations first
+    1.5 Binding variables and values
+	* equal sign is an assignment of a value to a variable name
+	* pi = 3.14159; radius = 2.2; area = pi * (radius ** 2)
+        # radius = radius +1 is equal to radius += 1
+
