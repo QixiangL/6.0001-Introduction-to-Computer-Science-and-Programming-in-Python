@@ -1,5 +1,5 @@
 # 6.0001-Introduction-to-Computer-Science-and-Programming-in-Python
-These are the notes for 6.0001 Introduction to Computer Science and Programming in Python, by MIT OpenCourseWare.
+# These are the notes for 6.0001 Introduction to Computer Science and Programming in Python, by MIT OpenCourseWare.
 2019.JAN
 Lecture 1: What is Computation?
 Lecture 2: Branching and Iteration
