@@ -1,0 +1,173 @@
+# Lecture 11: Understanding Program Efficiency, Part 2 
+	- Identifying Algorithm and its complexity
+	   (1)linear + (2)quadratic + (3)constant + (4)logarithmic + (5)log-linear + (6)exponential
+
+   11.1 LINEAR COMPLEXITY
+      11.1.1 basic algorithm
+	* simple iterative loop algorithms are typically linear in complexity
+      11.1.2 [Algorithm] - linear search on unsorted list
+	#example:  <UNSORTED LIST>
+		def linear_search(L, e):
+			found = False	#set a flag
+			for i in range(Len(L)):
+				if e == L[i]:
+					found = True
+			return found
+	* overall complexity: O(len(L))
+	* Python's genius list ---> constant time list access (string or int, doesn't care!)
+      11.1.3 [Algorithm] - iteration to do the loop (calculate n!)
+	#example:  <ITERATION>
+		def fact_iter(n):
+			result = 1
+			for i in range(1, n+1)
+				result *= i
+			return result
+	* overall complexity: O(n)
+
+   11.2 NESTED LOOPS
+      11.2.1 basic algorithm
+	* simple loops are linear in complexity, but loops in loops is nested with complexity O(n^2), quadratic
+      11.2.2 [Algorithm] - exhaustion on whether list1 is the subset of list2
+			(every element of first, appears in second, assume no duplicates)
+	#example:  <EXHAUSTION>
+		def isSubset(L1, L2):
+		      for e1 in L1:
+		            matched = False
+		            for e2 in L2:
+	          	                  if e1 == e2:
+			        matched = True
+			        break
+		            if not matched:
+		                  return False
+		      return True
+	* overall complexity: O(len(L1)*len(L2))
+		                O(len(L1)^2) if L1 == L2
+      11.2.3 [Algorithm] - exhaustion on finding intersection of 2 lists
+			(find intersectiion of 2 lists, return a list with each element appearing only once)
+	#example:  <EXHAUSTION>
+		def intersect(L1, L2):
+		      result_tmp = []      
+		      for e1 in L1:
+		            for e2 in L2:
+		                  if e1 == e2:
+		                        result_tmp.append(e1)
+		      result = []
+		            for e in result_tmp:
+		                  if not (e in res):
+		                        result.append(e)
+		      return result
+	* overall complexity: O(len(L1)^2)
+      11.2.4 In general
+	* O() for nested loops - O(n^2)
+	#example <computes n^2 very inefficiently>
+	      def g(n):
+	            """assume n >= 0 """
+	            x = 0
+	            for i in range(n):
+	                  for j in range(n):
+	                        x += 1
+	            return x
+
+   11.3 CONSTANT COMPLEXITY
+	* very few but exist
+	* complexity independent of inputs
+
+   11.4 LOGARITHMIC COMPLEXITY
+      11.4.1 basic algorithm
+	* complexity grows as log of size of one of its inputs (bisection search + binary search of a list)
+      11.4.2 [Algorithm] - bisection search
+	* fundamental 4 steps - a new version of a divide-and-conquer algorithm
+	   - 1. pick an index, i, that divides list in half
+	   - 2. ask if L[i] == e
+	   - 3. if not, ask if L[i] is larger or smaller than e
+	   - 4. depending on answer, search left or right half of L for e
+	#example:  <BISECTION SEARCH - SLICE AND COPY - RECURSION>
+		def bisect_search1(L, e):
+		      if L == []:
+		            return False
+		      elif len(L) = 1:
+		            return L[0] == e
+		      else:
+		            half = len(L) // 2
+		            if L[half] > e:                                               #if e is at the left side
+		                  return bisect_search1(L[:half], e)            #slice and copy the left side
+		            else:
+		                  return bisect_search1(L[half:], e)            #slice and copy the right side			
+	* overall complexity: O(nlogn), n = len(L)
+	   - O(log n) bisection search calls
+	   - O(n) for each bisection search call to slice and copy list
+	   - overall complexity O(log n) * O(n)
+	#example:  <BISECTION SEARCH - POINTER - RECURSION>
+		def bisect_search2(L, e):
+		      def bisect_search_pointer(L, e, low, high):
+		            if high == low:
+		                  return L[low] == e	
+		            mid = (low + high) // 2
+		            if L[mid] == e:
+		                  return True
+		            elif L[mid] > e:
+		                  if low == mid:                        #False output1 ---> e is at left half and the search pointer is at right half
+		                        return False
+		                  else:
+		                        return bisect_search_pointer(L, e, low, mid - 1)  #True recursion1 ---> e at left half
+		            else:
+		                  return bisect_search_pointer(L, e, mid + 1, high)      #True recursion2 ---> e at right half
+		      if len(L) == 0: 			#False output2 ---> no pointer
+		            return False
+		      else:
+		            return bisect_search_pointer(L, e, 0, len(L) - 1)                # if not False output2, run pointer
+	* overall complexity: O(nlogn), n = len(L)
+	   - O(log n) bisection search calls
+	   - list never copied, but re-passed as a pointer
+	   - overall complexity O(log n) * O(1) = O(log n)
+      11.4.3 [Algorithm] - intToStr
+	#example:  <LOG RECURSION>
+		def intToStr(i):
+    		      digits = '0123456789'			#number to char relation list
+    		      if i == 0:
+        		            return 0
+    		      result = ''
+    		      while i > 0:
+        		            result = digits[i % 10] + result		#put the new char in the front
+        		            i = i // 10				#test on each digit
+    		      return result
+	* overall complexity: O(log(i))
+
+   11.5 LOG-LINEAR COMPLEXITY
+	* very practical
+	* commonly used in <merge sort>
+
+   11.6 EXPONENTIAL COMPLEXITY
+      11.6.1 basic algorithm
+	* recursive functions for more than 1 recursive call for each size of problem (multi-recursive)
+	      # Towers of Hanoi
+	* geometric growth ---> O(2^n)
+      11.6.2 [Algorithm] - power set
+	* generate the collection of all possible subsets
+	#example:  <POWER SET - ITERATION + RECURSION>
+		def genSubsets(L):
+		      if len(L) == 0:
+		            return [[]]
+		      smaller = genSubsets(L[:-1])		#all subsets without last element, recursive call!
+		      extra = L[-1:]				#just last element
+		      newSet = []
+		      for small in smaller:
+		            new.append(small + extra)		#for all smaller solutions, add one with last element
+		      return smaller + new			
+	* overall complexity: O(2^n)
+
+   11.7 SUMMARY
+      11.7.1	* complexity classes
+	   - O(1) - code does not depend on size of problem
+	   - O(log n) - reduce problem in half each time through process
+	   - O(n) - simple iterative or recursive programs
+	   - O(nlogn) - will see next time
+	   - O(n^c) - nested loops or recursive calls
+	   - O(c^n) - multiple recursive calls at each level
+      11.7.2 * more about Fibonacci
+	   - iterative Fib: O(n)
+	   - recursive Fib: O(2^n)
+	   - recursive + dictionary: O(?) but still EXPONENTIAL!!!
+
+
+
